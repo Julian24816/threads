@@ -8,6 +8,6 @@ class LinesPattern implements Pattern {
 
     @Override
     public KnotType getKnotType(int row, int column) {
-        return KnotType.LEFT;
+        return KnotType.get('\\');
     }
 }
