@@ -62,10 +62,10 @@ public class SwingLinesTest extends JComponent {
         testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
         newLineButton.addActionListener(e -> {
             int x1 = (int) (Math.random() * WIDTH);
-            int x2 = (int) (Math.random() * WIDTH);
             int y1 = (int) (Math.random() * HEIGHT);
+            int x2 = (int) (Math.random() * WIDTH);
             int y2 = (int) (Math.random() * HEIGHT);
-            Color randomColor = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
+            Color randomColor = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
             linesComponent.addLine(x1, y1, x2, y2, randomColor);
         });
         clearButton.addActionListener(e -> {
