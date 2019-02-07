@@ -13,7 +13,7 @@ public class BasicVisualizer extends Visualizer {
     private static final int KNOT_HEIGHT = 15;
     private static final int HORIZONTAL_SPACING = 8;
     private static final int VERTICAL_SPACING = 14;
-    private static final int EVEN_COLUMN_OFFSET = 6; // every second column is offset down by this amount
+    private static final int ODD_COLUMN_OFFSET = 6; // every second column is offset down by this amount
 
     private static final int ROWS = 30;
     private static final int MAX_COLUMNS = 11;
@@ -70,7 +70,7 @@ public class BasicVisualizer extends Visualizer {
         g.setColor(knot.getColor());
         g.fillOval(
                 upperLeftCorner[0] + HORIZONTAL_SPACING * column,
-                upperLeftCorner[1] + VERTICAL_SPACING * row + EVEN_COLUMN_OFFSET * (column % 2),
+                upperLeftCorner[1] + VERTICAL_SPACING * row + ODD_COLUMN_OFFSET * (column % 2),
                 KNOT_WIDTH, KNOT_HEIGHT
         );
     }
