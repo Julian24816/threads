@@ -17,26 +17,26 @@ public class SwingOvalsTest extends JComponent {
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        final SwingOvalsTest linesComponent = new SwingOvalsTest();
-        linesComponent.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        testFrame.getContentPane().add(linesComponent, BorderLayout.CENTER);
+        final SwingOvalsTest ovalsComponent = new SwingOvalsTest();
+        ovalsComponent.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        testFrame.getContentPane().add(ovalsComponent, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel();
-        JButton newLineButton = new JButton("New Oval");
+        JButton newOvalButton = new JButton("New Oval");
         JButton clearButton = new JButton("Clear");
-        buttonsPanel.add(newLineButton);
+        buttonsPanel.add(newOvalButton);
         buttonsPanel.add(clearButton);
         testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
-        newLineButton.addActionListener(e -> {
+        newOvalButton.addActionListener(e -> {
             int x = (int) (Math.random() * WIDTH);
             int y = (int) (Math.random() * HEIGHT);
             int width = (int) (Math.random() * WIDTH / 10);
-            int heigth = (int) (Math.random() * HEIGHT / 10);
+            int height = (int) (Math.random() * HEIGHT / 10);
             Color randomColor = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
-            linesComponent.addOval(x, y, width, heigth, randomColor);
+            ovalsComponent.addOval(x, y, width, height, randomColor);
         });
         clearButton.addActionListener(e -> {
-            linesComponent.clearOvals();
+            ovalsComponent.clearOvals();
         });
 
         testFrame.pack();
