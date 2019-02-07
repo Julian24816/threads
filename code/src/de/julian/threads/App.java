@@ -9,7 +9,7 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         Visualizer visualizer = new BasicVisualizer();
-        visualizer.setBracelet(new BasicBracelet(new LinesPattern(), getThreads()));
+        visualizer.setBracelet(new BasicBracelet(PatternFactory.forString("\\\\\\\\///"), getThreads()));
         frame.getContentPane().add(visualizer);
 
         frame.pack();
@@ -21,11 +21,11 @@ public class App {
                 new ColoredThread(Color.ORANGE),
                 new ColoredThread(Color.CYAN),
                 new ColoredThread(Color.BLUE),
-                new ColoredThread(Color.PINK),
                 new ColoredThread(Color.MAGENTA),
-                new ColoredThread(Color.RED),
-                new ColoredThread(Color.GREEN),
-                new ColoredThread(Color.YELLOW)
+                new ColoredThread(Color.MAGENTA),
+                new ColoredThread(Color.BLUE),
+                new ColoredThread(Color.CYAN),
+                new ColoredThread(Color.ORANGE)
         };
     }
 }
