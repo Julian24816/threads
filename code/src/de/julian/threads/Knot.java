@@ -4,4 +4,6 @@ import java.awt.*;
 
 interface Knot {
     Color getColor();
+    ColoredThread getLeftEmergingThread();
+    ColoredThread getRightEmergingThread();
 }
