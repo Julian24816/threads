@@ -59,25 +59,20 @@ public class App extends JFrame {
         JPanel settingsPane = new JPanel();
         settingsPane.setLayout(new BoxLayout(settingsPane, BoxLayout.LINE_AXIS));
         settingsPane.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
-        settingsPane.add(createManipulationsPane());
+        settingsPane.add(createPatternAndManipulationsPane());
         settingsPane.add(createGeneratorPane());
         return settingsPane;
-    }
-
-    private JPanel createManipulationsPane() {
-        JPanel manipulationsPane = new JPanel();
-        manipulationsPane.setLayout(new BoxLayout(manipulationsPane, BoxLayout.LINE_AXIS));
-        manipulationsPane.setBorder(BorderFactory.createEmptyBorder());
-        manipulationsPane.add(createThreadColorPane());
-        manipulationsPane.add(createPatternAndManipulationButtonsPane());
-        return manipulationsPane;
     }
 
     private JPanel createThreadColorPane() {
         threadColorPane = new JPanel(new GridLayout(0, 1));
         threadColorPane.setBorder(BorderFactory.createEmptyBorder());
         refreshColorButtons();
-        return threadColorPane;
+
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 10));
+        wrapper.add(threadColorPane, BorderLayout.PAGE_START);
+        return wrapper;
     }
 
     private void refreshColorButtons() {
@@ -98,7 +93,7 @@ public class App extends JFrame {
         }
     }
 
-    private JPanel createPatternAndManipulationButtonsPane() {
+    private JPanel createPatternAndManipulationsPane() {
         JPanel patternAndManipulationButtonsPane = new JPanel();
         patternAndManipulationButtonsPane.setLayout(new BoxLayout(patternAndManipulationButtonsPane, BoxLayout.PAGE_AXIS));
         patternAndManipulationButtonsPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
@@ -217,9 +212,18 @@ public class App extends JFrame {
     private JPanel createBraceletsPane() {
         JPanel braceletsPane = new JPanel(new BorderLayout());
         braceletsPane.add(createSavedBraceletsPane());
-        braceletVisualizerComponent = new BraceletVisualizerComponent(new BasicVisualizer(bracelet));
-        braceletsPane.add(braceletVisualizerComponent, BorderLayout.LINE_END);
+        braceletsPane.add(createBraceletVisualizerAndColorsPane(), BorderLayout.LINE_END);
         return braceletsPane;
+    }
+
+    private JPanel createBraceletVisualizerAndColorsPane() {
+        JPanel braceletVisualizerAndColorsPane = new JPanel();
+        braceletVisualizerAndColorsPane.setLayout(new BoxLayout(braceletVisualizerAndColorsPane, BoxLayout.LINE_AXIS));
+        braceletVisualizerAndColorsPane.setBorder(BorderFactory.createEmptyBorder());
+        braceletVisualizerComponent = new BraceletVisualizerComponent(new BasicVisualizer(bracelet));
+        braceletVisualizerAndColorsPane.add(braceletVisualizerComponent);
+        braceletVisualizerAndColorsPane.add(createThreadColorPane());
+        return braceletVisualizerAndColorsPane;
     }
 
     private JPanel createSavedBraceletsPane() {
