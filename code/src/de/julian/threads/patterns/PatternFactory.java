@@ -6,4 +6,8 @@ public class PatternFactory {
     public static Pattern forString(String description) {
         return new RepeatingPattern(description);
     }
+
+    public static boolean isCorrectPattern(String description) {
+        return RepeatingPattern.containsOnlyAllowedCharacters(description) && RepeatingPattern.allRowLengthsAreEqual(description);
+    }
 }

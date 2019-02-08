@@ -3,11 +3,11 @@ package de.julian.threads.app;
 import de.julian.threads.BasicBracelet;
 import de.julian.threads.Bracelet;
 import de.julian.threads.ColoredThread;
+import de.julian.threads.Pattern;
 import de.julian.threads.patterns.PatternFactory;
 import de.julian.threads.visualizer.BasicVisualizer;
 
 import javax.swing.*;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import java.awt.*;
 
 public class App extends JFrame {
@@ -117,8 +117,36 @@ public class App extends JFrame {
         JPanel patternPane = new JPanel(new BorderLayout());
         patternPane.setBorder(BorderFactory.createTitledBorder("Pattern"));
         patternPane.add(createPatternTextArea());
-        patternPane.add(new JButton("GO"), BorderLayout.LINE_END);
+        patternPane.add(createApplyPatternButton(), BorderLayout.LINE_END);
         return patternPane;
+    }
+
+    private JButton createApplyPatternButton() {
+        final JButton applyPatternButton = new JButton("GO");
+        applyPatternButton.addActionListener(e -> {
+            String description = patternTextArea.getText();
+            if (PatternFactory.isCorrectPattern(description)) {
+                final Pattern pattern = PatternFactory.forString(description);
+                final ColoredThread[] threads = fixNumberOfThreads(bracelet.getThreads(), pattern.getColumns() + 1);
+                setDisplayedBracelet(new BasicBracelet(pattern, threads));
+            }
+        });
+        return applyPatternButton;
+    }
+
+    private ColoredThread[] fixNumberOfThreads(ColoredThread[] existingThreads, int targetNumber) {
+        if (existingThreads.length == targetNumber) return existingThreads;
+
+        ColoredThread[] result = new ColoredThread[targetNumber];
+        if (existingThreads.length > targetNumber) {
+            System.arraycopy(existingThreads, 0, result, 0, targetNumber);
+        } else {
+            final int requiredNewThreads = targetNumber - existingThreads.length;
+            final ColoredThread[] newThreads = ColoredThread.getRandomThreads(requiredNewThreads);
+            System.arraycopy(existingThreads, 0, result, 0, existingThreads.length);
+            System.arraycopy(newThreads, 0, result, existingThreads.length, requiredNewThreads);
+        }
+        return result;
     }
 
     private JTextArea createPatternTextArea() {
@@ -127,7 +155,7 @@ public class App extends JFrame {
     }
 
     private JPanel createManipulationButtonsPane() {
-        JPanel manipulationButtonsPane = new JPanel(new GridLayout(2,2));
+        JPanel manipulationButtonsPane = new JPanel(new GridLayout(2, 2));
         manipulationButtonsPane.setBorder(BorderFactory.createTitledBorder("Manipulations"));
         for (int i = 0; i < 4; i++)
             manipulationButtonsPane.add(new JButton("Manipulation #" + i));
@@ -182,7 +210,7 @@ public class App extends JFrame {
         descriptionTextArea.setWrapStyleWord(true);
         descriptionTextArea.setEditable(false);
         descriptionTextArea.setOpaque(true);
-        descriptionTextArea.setBackground(new Color(0,0,0,0));
+        descriptionTextArea.setBackground(new Color(0, 0, 0, 0));
         return descriptionTextArea;
     }
 
