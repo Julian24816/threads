@@ -9,6 +9,7 @@ import de.julian.threads.visualizer.BasicVisualizer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class App extends JFrame {
 
@@ -36,6 +37,7 @@ public class App extends JFrame {
         patternTextArea.setText(bracelet.getPatternDescription());
         descriptionTextArea.setText("a description of bracelet " + bracelet + " will land here.");
         refreshColorButtons();
+        pack();
     }
 
     private void createFrame() {
@@ -118,15 +120,17 @@ public class App extends JFrame {
 
     private JButton createApplyPatternButton() {
         final JButton applyPatternButton = new JButton("GO");
-        applyPatternButton.addActionListener(e -> {
-            String description = patternTextArea.getText();
-            if (PatternFactory.isCorrectPattern(description)) {
-                final Pattern pattern = PatternFactory.forString(description);
-                final ColoredThread[] threads = fixNumberOfThreads(bracelet.getThreads(), pattern.getColumns() + 1);
-                setDisplayedBracelet(new BasicBracelet(pattern, threads));
-            }
-        });
+        applyPatternButton.addActionListener(e -> submitPattern());
         return applyPatternButton;
+    }
+
+    private void submitPattern() {
+        String description = patternTextArea.getText();
+        if (PatternFactory.isCorrectPattern(description)) {
+            final Pattern pattern = PatternFactory.forString(description);
+            final ColoredThread[] threads = fixNumberOfThreads(bracelet.getThreads(), pattern.getColumns() + 1);
+            setDisplayedBracelet(new BasicBracelet(pattern, threads));
+        }
     }
 
     private ColoredThread[] fixNumberOfThreads(ColoredThread[] existingThreads, int targetNumber) {
@@ -146,6 +150,18 @@ public class App extends JFrame {
 
     private JTextArea createPatternTextArea() {
         patternTextArea = new JTextArea(bracelet.getPatternDescription(), 2, 11);
+
+        final String SUBMIT_PATTERN = "submit-pattern";
+        final InputMap inputMap = patternTextArea.getInputMap();
+        inputMap.put(KeyStroke.getKeyStroke("shift ENTER"), "insert-break");
+        inputMap.put(KeyStroke.getKeyStroke("ENTER"), SUBMIT_PATTERN);
+        patternTextArea.getActionMap().put(SUBMIT_PATTERN, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                submitPattern();
+            }
+        });
+
         return patternTextArea;
     }
 
@@ -203,7 +219,7 @@ public class App extends JFrame {
         descriptionTextArea = new JTextArea("a description of bracelet " + bracelet + " will land here.", 10, 50);
         descriptionTextArea.setLineWrap(true);
         descriptionTextArea.setWrapStyleWord(true);
-        descriptionTextArea.setEditable(false);
+        //descriptionTextArea.setEditable(false);
         descriptionTextArea.setOpaque(true);
         descriptionTextArea.setBackground(new Color(0, 0, 0, 0));
         return descriptionTextArea;
