@@ -8,24 +8,17 @@ public class App {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        Visualizer visualizer = new BasicVisualizer();
-        visualizer.setBracelet(new BasicBracelet(PatternFactory.forString(">\\\\\\///\n\\\\\\///<"), getThreads()));
-        frame.getContentPane().add(visualizer);
+        final Pattern pattern = PatternFactory.forString(">\\\\\\///\n\\\\\\///<");
+        final ColoredThread[] threads = ColoredThread.forColors(
+                Color.YELLOW, Color.WHITE, Color.GREEN, Color.BLACK,
+                Color.WHITE, Color.WHITE, Color.GREEN, Color.YELLOW);
+
+        final BasicBracelet bracelet = new BasicBracelet(pattern, threads);
+        final BasicVisualizer visualizer = new BasicVisualizer(bracelet);
+        final BraceletVisualizerComponent braceletVisualizerComponent = new BraceletVisualizerComponent(visualizer);
+        frame.getContentPane().add(braceletVisualizerComponent);
 
         frame.pack();
         frame.setVisible(true);
-    }
-
-    private static ColoredThread[] getThreads() {
-        return new ColoredThread[]{
-                new ColoredThread(Color.YELLOW),
-                new ColoredThread(Color.WHITE),
-                new ColoredThread(Color.GREEN),
-                new ColoredThread(Color.BLACK),
-                new ColoredThread(Color.WHITE),
-                new ColoredThread(Color.WHITE),
-                new ColoredThread(Color.GREEN),
-                new ColoredThread(Color.YELLOW)
-        };
     }
 }

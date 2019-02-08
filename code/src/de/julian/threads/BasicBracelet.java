@@ -22,6 +22,11 @@ class BasicBracelet implements Bracelet {
     }
 
     @Override
+    public int getRows() {
+        return pattern.getRows();
+    }
+
+    @Override
     public Knot getKnot(int row, int column) {
         if (row > computedRows.size() - 1) computeRowsUntil(row);
         return computedRows.get(row).knots[column];

@@ -2,22 +2,21 @@ package de.julian.threads;
 
 import java.awt.*;
 
-/**
- * represents a thread running through a bracelet.
- * This is mutable for easy color changes without re-computation of knot arrangement.
- */
 class ColoredThread {
-    private Color color;
+    private final Color color;
 
-    ColoredThread(Color color) {
+    private ColoredThread(Color color) {
         this.color = color;
     }
 
-    public Color getColor() {
+    static ColoredThread[] forColors(Color... colors) {
+        final ColoredThread[] threads = new ColoredThread[colors.length];
+        for (int i = 0; i < colors.length; i++)
+            threads[i] = new ColoredThread(colors[i]);
+        return threads;
+    }
+
+    Color getColor() {
         return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 }

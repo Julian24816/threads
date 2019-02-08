@@ -28,6 +28,11 @@ public class RepeatingPattern implements Pattern {
     }
 
     @Override
+    public int getRows() {
+        return 30;
+    }
+
+    @Override
     public KnotType getKnotType(int row, int column) {
         return KnotType.get(rows[row % rows.length].charAt(column));
     }
