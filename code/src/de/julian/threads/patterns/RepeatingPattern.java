@@ -32,7 +32,7 @@ class RepeatingPattern implements Pattern {
 
     @Override
     public int getRows() {
-        return 30;
+        return 48;
     }
 
     @Override
