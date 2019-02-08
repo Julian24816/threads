@@ -1,8 +1,11 @@
-package de.julian.threads;
+package de.julian.threads.pattern;
+
+import de.julian.threads.Pattern;
+import de.julian.threads.knot.KnotType;
 
 import java.util.regex.Matcher;
 
-public class RepeatingPattern implements Pattern {
+class RepeatingPattern implements Pattern {
 
     private final String[] rows;
     private final int columns;

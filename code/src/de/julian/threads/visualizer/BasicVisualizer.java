@@ -1,4 +1,8 @@
-package de.julian.threads;
+package de.julian.threads.visualizer;
+
+import de.julian.threads.Bracelet;
+import de.julian.threads.Knot;
+import de.julian.threads.Visualizer;
 
 import java.awt.*;
 
@@ -7,7 +11,7 @@ import java.awt.*;
  */
 public class BasicVisualizer extends Visualizer {
 
-    BasicVisualizer(Bracelet bracelet) {
+    public BasicVisualizer(Bracelet bracelet) {
         super(bracelet);
     }
 

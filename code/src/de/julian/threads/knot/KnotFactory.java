@@ -1,9 +1,12 @@
-package de.julian.threads;
+package de.julian.threads.knot;
 
-import java.awt.Color;
+import de.julian.threads.ColoredThread;
+import de.julian.threads.Knot;
 
-class KnotFactory {
-    static Knot get(KnotType knotType, ColoredThread leftThread, ColoredThread rightThread) {
+import java.awt.*;
+
+public class KnotFactory {
+    public static Knot get(KnotType knotType, ColoredThread leftThread, ColoredThread rightThread) {
         if (knotType.isNoKnotSpecialCase()) throw new RuntimeException("not implemented");
         return new Knot() {
             @Override

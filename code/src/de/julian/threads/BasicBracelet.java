@@ -1,16 +1,16 @@
 package de.julian.threads;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects;
+import de.julian.threads.knot.KnotFactory;
 
-class BasicBracelet implements Bracelet {
+import java.util.LinkedList;
+
+public class BasicBracelet implements Bracelet {
     private final Pattern pattern;
 
     private final ColoredThread[] currentThreadArrangement;
     private final LinkedList<Row> computedRows = new LinkedList<>();
 
-    BasicBracelet(Pattern pattern, ColoredThread[] threads) {
+    public BasicBracelet(Pattern pattern, ColoredThread[] threads) {
         assert threads.length == pattern.getColumns() + 1 : "incorrect number of threads for this pattern";
         this.pattern = pattern;
         this.currentThreadArrangement = threads;
@@ -45,7 +45,6 @@ class BasicBracelet implements Bracelet {
         // compute even knots first, because odd knots use the resulting thread arrangement
         for (int column = 0; column < pattern.getColumns(); column += 2) computeKnot(knotRow, row, column);
         for (int column = 1; column < pattern.getColumns(); column += 2) computeKnot(knotRow, row, column);
-        assert knotRow.complete();
     }
 
     private void computeKnot(Row knotRow, int row, int column) {
@@ -63,10 +62,6 @@ class BasicBracelet implements Bracelet {
         private Row(int columns) {
             this.columns = columns;
             knots = new Knot[columns];
-        }
-
-        private boolean complete() {
-            return Arrays.stream(knots).noneMatch(Objects::isNull);
         }
     }
 }

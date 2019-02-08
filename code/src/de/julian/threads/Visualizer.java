@@ -18,21 +18,21 @@ public abstract class Visualizer {
     private Graphics g;
     private int offsetX, offsetY;
 
-    Visualizer(Bracelet bracelet) {
+    protected Visualizer(Bracelet bracelet) {
         this.bracelet = bracelet;
         width = knotWidth + horizontalSpacing * (bracelet.getColumns() - 1) + 2 * MARGIN;
         height = knotHeight + verticalSpacing * (bracelet.getRows() - 1) + oddColumnOffset + 2 * MARGIN;
     }
 
-    final int getWidth() {
+    public final int getWidth() {
         return width;
     }
 
-    final int getHeight() {
+    public final int getHeight() {
         return height;
     }
 
-    final void paintOn(Graphics g, int offsetX, int offsetY) {
+    public final void paintOn(Graphics g, int offsetX, int offsetY) {
         this.g = g;
         this.offsetX = offsetX;
         this.offsetY = offsetY;

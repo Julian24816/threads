@@ -1,4 +1,6 @@
-package de.julian.threads;
+package de.julian.threads.app;
+
+import de.julian.threads.Visualizer;
 
 import javax.swing.*;
 import java.awt.*;

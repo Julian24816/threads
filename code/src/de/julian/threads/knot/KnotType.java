@@ -1,6 +1,6 @@
-package de.julian.threads;
+package de.julian.threads.knot;
 
-enum KnotType {
+public enum KnotType {
     LEFT_OVER('\\'),
     RIGHT_OVER('/', true),
     LEFT_BACK('>', false, false),
@@ -26,7 +26,7 @@ enum KnotType {
         this.crossThreads = crossThreads;
     }
 
-    static KnotType get(char description) {
+    public static KnotType get(char description) {
         switch (description) {
             case '\\':
                 return LEFT_OVER;
