@@ -7,9 +7,10 @@ import de.julian.threads.patterns.PatternFactory;
 import de.julian.threads.visualizer.BasicVisualizer;
 
 import javax.swing.*;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import java.awt.*;
 
-public class App {
+public class App extends JFrame {
 
     private Bracelet bracelet;
     private BraceletVisualizerComponent braceletVisualizerComponent;
@@ -29,7 +30,7 @@ public class App {
         new App(defaultBracelet);
     }
 
-    public void setDisplayedBracelet(Bracelet bracelet) {
+    private void setDisplayedBracelet(Bracelet bracelet) {
         this.bracelet = bracelet;
         braceletVisualizerComponent.switchToVisualizer(new BasicVisualizer(bracelet));
         patternTextArea.setText(bracelet.getPatternDescription());
@@ -38,13 +39,12 @@ public class App {
     }
 
     private void createFrame() {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setTitle("Threads - a friendship bracelet pattern visualizer");
-        frame.getContentPane().add(createBraceletsPane(), BorderLayout.LINE_START);
-        frame.getContentPane().add(createMainPane());
-        frame.pack();
-        frame.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setTitle("Threads - a friendship bracelet pattern visualizer");
+        this.getContentPane().add(createBraceletsPane(), BorderLayout.LINE_START);
+        this.getContentPane().add(createMainPane());
+        this.pack();
+        this.setVisible(true);
     }
 
     private JPanel createMainPane() {
@@ -86,7 +86,14 @@ public class App {
             JButton colorButton = new JButton();
             colorButton.setBackground(thread.getColor());
             colorButton.setPreferredSize(new Dimension(30, 30));
-            //TODO add action listener
+            colorButton.addActionListener(e -> {
+                Color newColor = JColorChooser.showDialog(this, "choose a new color", thread.getColor());
+                if (newColor != null) {
+                    colorButton.setBackground(newColor);
+                    thread.setColor(newColor);
+                    braceletVisualizerComponent.repaint();
+                }
+            });
             threadColorPane.add(colorButton);
         }
     }

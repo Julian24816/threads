@@ -3,7 +3,7 @@ package de.julian.threads;
 import java.awt.*;
 
 public class ColoredThread {
-    private final Color color;
+    private Color color;
 
     private ColoredThread(Color color) {
         this.color = color;
@@ -18,5 +18,9 @@ public class ColoredThread {
 
     public Color getColor() {
         return color;
+    }
+
+    public void setColor(Color newColor) {
+        color = newColor;
     }
 }
