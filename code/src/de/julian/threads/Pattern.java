@@ -1,6 +1,6 @@
 package de.julian.threads;
 
-import de.julian.threads.knot.KnotType;
+import de.julian.threads.knots.KnotType;
 
 public interface Pattern {
     int getColumns();

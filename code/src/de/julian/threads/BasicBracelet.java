@@ -1,6 +1,6 @@
 package de.julian.threads;
 
-import de.julian.threads.knot.KnotFactory;
+import de.julian.threads.knots.KnotFactory;
 
 import java.util.LinkedList;
 

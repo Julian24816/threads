@@ -1,4 +1,4 @@
-package de.julian.threads.knot;
+package de.julian.threads.knots;
 
 public enum KnotType {
     LEFT_OVER('\\'),

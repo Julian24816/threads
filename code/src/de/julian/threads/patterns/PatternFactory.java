@@ -1,4 +1,4 @@
-package de.julian.threads.pattern;
+package de.julian.threads.patterns;
 
 import de.julian.threads.Pattern;
 

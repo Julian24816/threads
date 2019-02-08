@@ -4,7 +4,7 @@ import de.julian.threads.BasicBracelet;
 import de.julian.threads.ColoredThread;
 import de.julian.threads.Pattern;
 import de.julian.threads.Visualizer;
-import de.julian.threads.pattern.PatternFactory;
+import de.julian.threads.patterns.PatternFactory;
 import de.julian.threads.visualizer.BasicVisualizer;
 
 import javax.swing.*;

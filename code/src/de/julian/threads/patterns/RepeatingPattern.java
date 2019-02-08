@@ -1,7 +1,7 @@
-package de.julian.threads.pattern;
+package de.julian.threads.patterns;
 
 import de.julian.threads.Pattern;
-import de.julian.threads.knot.KnotType;
+import de.julian.threads.knots.KnotType;
 
 import java.util.regex.Matcher;
 

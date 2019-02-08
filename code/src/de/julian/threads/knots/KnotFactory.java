@@ -1,4 +1,4 @@
-package de.julian.threads.knot;
+package de.julian.threads.knots;
 
 import de.julian.threads.ColoredThread;
 import de.julian.threads.Knot;
