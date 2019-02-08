@@ -1,8 +1,8 @@
 package de.julian.threads.app;
 
 import de.julian.threads.BasicBracelet;
+import de.julian.threads.Bracelet;
 import de.julian.threads.ColoredThread;
-import de.julian.threads.Visualizer;
 import de.julian.threads.patterns.PatternFactory;
 import de.julian.threads.visualizer.BasicVisualizer;
 
@@ -11,17 +11,30 @@ import java.awt.*;
 
 public class App {
 
-    private static final Visualizer DEFAULT_VISUALIZER = new BasicVisualizer(new BasicBracelet(PatternFactory.forString(">\\\\\\///\n\\\\\\///<"), ColoredThread.forColors(
-            Color.YELLOW, Color.WHITE, Color.GREEN, Color.BLACK,
-            Color.WHITE, Color.WHITE, Color.GREEN, Color.YELLOW)));
+    private Bracelet bracelet;
+    private BraceletVisualizerComponent braceletVisualizerComponent;
+    private JTextArea descriptionTextArea;
+    private JTextArea patternTextArea;
+    private JPanel threadColorPane;
 
-    private App() {
+    private App(Bracelet bracelet) {
+        this.bracelet = bracelet;
         createFrame();
     }
 
     public static void main(String[] args) {
-        new App();
-        //TODO allow for easier dependency injection of e.g. the visualizer
+        final BasicBracelet defaultBracelet = new BasicBracelet(PatternFactory.forString(">\\\\\\///\n\\\\\\///<"), ColoredThread.forColors(
+                Color.YELLOW, Color.WHITE, Color.GREEN, Color.BLACK,
+                Color.WHITE, Color.WHITE, Color.GREEN, Color.YELLOW));
+        new App(defaultBracelet);
+    }
+
+    public void setDisplayedBracelet(Bracelet bracelet) {
+        this.bracelet = bracelet;
+        braceletVisualizerComponent.switchToVisualizer(new BasicVisualizer(bracelet));
+        patternTextArea.setText(bracelet.getPatternDescription());
+        descriptionTextArea.setText("a description of bracelet " + bracelet + " will land here.");
+        refreshColorButtons();
     }
 
     private void createFrame() {
@@ -61,15 +74,21 @@ public class App {
     }
 
     private JPanel createThreadColorPane() {
-        JPanel threadColorPane = new JPanel(new GridLayout(0, 1));
+        threadColorPane = new JPanel(new GridLayout(0, 1));
         threadColorPane.setBorder(BorderFactory.createEmptyBorder());
-        for (int i = 0; i < 6; i++) {
-            JButton button = new JButton();
-            button.setBackground(Color.RED);
-            button.setPreferredSize(new Dimension(30, 30));
-            threadColorPane.add(button);
-        }
+        refreshColorButtons();
         return threadColorPane;
+    }
+
+    private void refreshColorButtons() {
+        threadColorPane.removeAll();
+        for (ColoredThread thread : bracelet.getThreads()) {
+            JButton colorButton = new JButton();
+            colorButton.setBackground(thread.getColor());
+            colorButton.setPreferredSize(new Dimension(30, 30));
+            //TODO add action listener
+            threadColorPane.add(colorButton);
+        }
     }
 
     private JPanel createPatternAndManipulationButtonsPane() {
@@ -96,7 +115,8 @@ public class App {
     }
 
     private JTextArea createPatternTextArea() {
-        return new JTextArea("no pattern text here.", 2, 11);
+        patternTextArea = new JTextArea(bracelet.getPatternDescription(), 2, 11);
+        return patternTextArea;
     }
 
     private JPanel createManipulationButtonsPane() {
@@ -128,8 +148,18 @@ public class App {
         JPanel generatorButtonsPane = new JPanel();
         generatorButtonsPane.setBorder(BorderFactory.createTitledBorder("generate"));
         generatorButtonsPane.add(new JButton("random bracelet"));
-        generatorButtonsPane.add(new JButton("default bracelets"));
+        generatorButtonsPane.add(createGenerateDefaultBraceletsButton());
         return generatorButtonsPane;
+    }
+
+    private JButton createGenerateDefaultBraceletsButton() {
+        final JButton generateDefaultBracelets = new JButton("default bracelets");
+        generateDefaultBracelets.addActionListener(e -> {
+            setDisplayedBracelet(new BasicBracelet(
+                    PatternFactory.forString("\\\\\\"),
+                    ColoredThread.forColors(Color.GREEN, Color.RED, Color.BLUE, Color.CYAN)));
+        });
+        return generateDefaultBracelets;
     }
 
     private JPanel createDescriptionPane() {
@@ -140,16 +170,20 @@ public class App {
     }
 
     private JTextArea createDescriptionTextArea() {
-        JTextArea description = new JTextArea("a description will land here.", 10, 50);
-        description.setLineWrap(true);
-        description.setWrapStyleWord(true);
-        return description;
+        descriptionTextArea = new JTextArea("a description of bracelet " + bracelet + " will land here.", 10, 50);
+        descriptionTextArea.setLineWrap(true);
+        descriptionTextArea.setWrapStyleWord(true);
+        descriptionTextArea.setEditable(false);
+        descriptionTextArea.setOpaque(true);
+        descriptionTextArea.setBackground(new Color(0,0,0,0));
+        return descriptionTextArea;
     }
 
     private JPanel createBraceletsPane() {
         JPanel braceletsPane = new JPanel(new BorderLayout());
         braceletsPane.add(createSavedBraceletsPane());
-        braceletsPane.add(new BraceletVisualizerComponent(DEFAULT_VISUALIZER), BorderLayout.LINE_END);
+        braceletVisualizerComponent = new BraceletVisualizerComponent(new BasicVisualizer(bracelet));
+        braceletsPane.add(braceletVisualizerComponent, BorderLayout.LINE_END);
         return braceletsPane;
     }
 

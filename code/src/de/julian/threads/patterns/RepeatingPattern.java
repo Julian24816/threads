@@ -39,4 +39,9 @@ class RepeatingPattern implements Pattern {
     public KnotType getKnotType(int row, int column) {
         return KnotType.get(rows[row % rows.length].charAt(column));
     }
+
+    @Override
+    public String toString() {
+        return String.join("\n", rows);
+    }
 }

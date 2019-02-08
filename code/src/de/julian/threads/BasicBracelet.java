@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 public class BasicBracelet implements Bracelet {
     private final Pattern pattern;
+    private final ColoredThread[] startingThreadArrangement;
 
     private final ColoredThread[] currentThreadArrangement;
     private final LinkedList<Row> computedRows = new LinkedList<>();
@@ -13,7 +14,8 @@ public class BasicBracelet implements Bracelet {
     public BasicBracelet(Pattern pattern, ColoredThread[] threads) {
         assert threads.length == pattern.getColumns() + 1 : "incorrect number of threads for this pattern";
         this.pattern = pattern;
-        this.currentThreadArrangement = threads;
+        this.startingThreadArrangement = threads;
+        this.currentThreadArrangement = threads.clone();
     }
 
     @Override
@@ -30,6 +32,16 @@ public class BasicBracelet implements Bracelet {
     public Knot getKnot(int row, int column) {
         if (row > computedRows.size() - 1) computeRowsUntil(row);
         return computedRows.get(row).knots[column];
+    }
+
+    @Override
+    public String getPatternDescription() {
+        return pattern.toString();
+    }
+
+    @Override
+    public ColoredThread[] getThreads() {
+        return startingThreadArrangement;
     }
 
     private void computeRowsUntil(int maxRow) {

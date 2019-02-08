@@ -8,12 +8,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 class BraceletVisualizerComponent extends JComponent {
-    private final Visualizer visualizer;
+    private Visualizer visualizer;
     private int offsetX;
 
     BraceletVisualizerComponent(Visualizer visualizer) {
-        this.visualizer = visualizer;
-        setPreferredSize(new Dimension(visualizer.getWidth(), visualizer.getHeight()));
+        switchToVisualizer(visualizer);
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -21,6 +20,13 @@ class BraceletVisualizerComponent extends JComponent {
                 offsetX = computeOffsetXFromBraceletWidth();
             }
         });
+    }
+
+    void switchToVisualizer(Visualizer visualizer) {
+        this.visualizer = visualizer;
+        setPreferredSize(new Dimension(visualizer.getWidth(), visualizer.getHeight()));
+        invalidate();
+        repaint();
     }
 
     private int computeOffsetXFromBraceletWidth() {
